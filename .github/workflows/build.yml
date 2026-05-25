@@ -33,9 +33,9 @@ jobs:
         uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
         with:
           files: /*
-          tag_name: ${{ needs.build.outputs.new_tag }}
-          name: Release ${{ needs.build.outputs.new_tag }}
-          body: ${{ needs.build.outputs.changelog }}
+          tag_name: ${{ needs.steps.outputs.new_tag }}
+          name: Release ${{ needs.steps.outputs.new_tag }}
+          body: ${{ needs.steps.outputs.changelog }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

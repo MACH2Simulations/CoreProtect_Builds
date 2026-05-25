@@ -21,3 +21,19 @@ jobs:
           cache: 'maven'
       - name: Build
         run: mvn -B verify
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@a22cf08638b34d5badda920f9daf6e72c477b07b # v6.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
+        with:
+          files: /*
+          tag_name: ${{ needs.build.outputs.new_tag }}
+          name: Release ${{ needs.build.outputs.new_tag }}
+          body: ${{ needs.build.outputs.changelog }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
